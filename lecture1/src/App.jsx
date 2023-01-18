@@ -25,7 +25,7 @@ function Welcome(props){
     )
 }
 
-const subject = "Adv full-stack programming";
+const subject = "Adv full-stack programming new";
 
 const App = ()=>{
     return(
