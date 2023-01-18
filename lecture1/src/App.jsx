@@ -17,10 +17,10 @@ class Greeting extends React.Component {
 }
 
 //functional component
-function Welcome(subject){
+function Welcome(props){
     return(
         <div id="root-3"> 
-            <h3>Welcome to {subject.subject}</h3>
+            <h3>Welcome to {props.subject}</h3>
         </div>
     )
 }
