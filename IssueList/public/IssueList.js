@@ -1,11 +1,64 @@
 function IssueFilter() {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueFilter"));
 }
-function IssueRow() {
-  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "1"), /*#__PURE__*/React.createElement("td", null, "Person-A"), /*#__PURE__*/React.createElement("td", null, "Assigned"), /*#__PURE__*/React.createElement("td", null, "2020-10-10"), /*#__PURE__*/React.createElement("td", null, "2d"), /*#__PURE__*/React.createElement("td", null, "2020-10-12"), /*#__PURE__*/React.createElement("td", null, "First Issue"));
+function IssueRow(props) {
+  const {
+    issue,
+    style
+  } = props;
+  // props.id
+  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
+    style: style
+  }, issue.Id), /*#__PURE__*/React.createElement("td", {
+    style: style
+  }, issue.Owner), /*#__PURE__*/React.createElement("td", {
+    style: style
+  }, issue.Status), /*#__PURE__*/React.createElement("td", {
+    style: style
+  }, issue.Created), /*#__PURE__*/React.createElement("td", {
+    style: style
+  }, issue.Effort), /*#__PURE__*/React.createElement("td", {
+    style: style
+  }, issue.Due), /*#__PURE__*/React.createElement("td", {
+    style: style
+  }, issue.Title));
 }
 function IssueTable() {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueTable"), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "OWNER"), /*#__PURE__*/React.createElement("th", null, "STATUS"), /*#__PURE__*/React.createElement("th", null, "CREATED"), /*#__PURE__*/React.createElement("th", null, "EFFORT"), /*#__PURE__*/React.createElement("th", null, "DUE"), /*#__PURE__*/React.createElement("th", null, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement(IssueRow, null), /*#__PURE__*/React.createElement(IssueRow, null))));
+  const style = {
+    border: '1px solid'
+  };
+  const issueList = {
+    Id: "1",
+    Owner: "Person=A",
+    Status: "Assigned",
+    Created: "2020-01-01",
+    Effort: "4",
+    Due: "2020-01-05",
+    Title: "First Issue"
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueTable"), /*#__PURE__*/React.createElement("table", {
+    style: style
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: style
+  }, "ID"), /*#__PURE__*/React.createElement("th", {
+    style: style
+  }, "OWNER"), /*#__PURE__*/React.createElement("th", {
+    style: style
+  }, "STATUS"), /*#__PURE__*/React.createElement("th", {
+    style: style
+  }, "CREATED"), /*#__PURE__*/React.createElement("th", {
+    style: style
+  }, "EFFORT"), /*#__PURE__*/React.createElement("th", {
+    style: style
+  }, "DUE"), /*#__PURE__*/React.createElement("th", {
+    style: style
+  }, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement(IssueRow, {
+    issue: issueList,
+    style: style
+  }), /*#__PURE__*/React.createElement(IssueRow, {
+    issue: issueList,
+    style: style
+  }))));
 }
 function IssueAdd() {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueAdd"));

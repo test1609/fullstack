@@ -5,38 +5,52 @@ function IssueFilter() {
         </div>
     )
 }
-function IssueRow() {
+function IssueRow(props) {
+    const {issue, style} = props;
+    // props.id
     return (
-        <tr>
-        <td>1</td>
-        <td>Person-A</td>
-        <td>Assigned</td>
-        <td>2020-10-10</td>
-        <td>2d</td>
-        <td>2020-10-12</td>
-        <td>First Issue</td>
+    <tr>
+        <td style={style}>{issue.Id}</td>
+        <td style={style}>{issue.Owner}</td>
+        <td style={style}>{issue.Status}</td>
+        <td style={style}>{issue.Created}</td>
+        <td style={style}>{issue.Effort}</td>
+        <td style={style}>{issue.Due}</td>
+        <td style={style}>{issue.Title}</td>
     </tr>
     )
 }
 function IssueTable() {
+    const style = {
+        border: '1px solid'
+    }
+    const issueList = {
+        Id:"1",
+        Owner: "Person=A",
+        Status: "Assigned",
+        Created: "2020-01-01",
+        Effort: "4",
+        Due:"2020-01-05",
+        Title: "First Issue"
+    }
     return (
         <div>
             <h3>Welcome to IssueTable</h3>
-            <table>
+            <table style={style}>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>OWNER</th>
-                        <th>STATUS</th>
-                        <th>CREATED</th>
-                        <th>EFFORT</th>
-                        <th>DUE</th>
-                        <th>TITLE</th>
+                        <th style={style}>ID</th>
+                        <th style={style}>OWNER</th>
+                        <th style={style}>STATUS</th>
+                        <th style={style}>CREATED</th>
+                        <th style={style}>EFFORT</th>
+                        <th style={style}>DUE</th>
+                        <th style={style}>TITLE</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <IssueRow></IssueRow>
-                    <IssueRow></IssueRow>
+                    <IssueRow issue={issueList} style={style}></IssueRow>
+                    <IssueRow issue={issueList} style={style}></IssueRow>
                 </tbody>
             </table>
         </div>

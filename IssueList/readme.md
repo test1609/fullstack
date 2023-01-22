@@ -6,3 +6,4 @@
  5. Add required functional or class components
  6. Change the js file name in index.html
  7. Compile and watch and run it again.
+ 
