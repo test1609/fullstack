@@ -27,7 +27,7 @@ function IssueTable() {
   const style = {
     border: '1px solid'
   };
-  const issueList = {
+  const issueList = [{
     Id: "1",
     Owner: "Person=A",
     Status: "Assigned",
@@ -35,7 +35,15 @@ function IssueTable() {
     Effort: "4",
     Due: "2020-01-05",
     Title: "First Issue"
-  };
+  }, {
+    Id: "2",
+    Owner: "Person=B",
+    Status: "Assigned",
+    Created: "2020-01-01",
+    Effort: "4",
+    Due: "2020-01-05",
+    Title: "First Issue"
+  }];
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueTable"), /*#__PURE__*/React.createElement("table", {
     style: style
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
@@ -52,13 +60,10 @@ function IssueTable() {
     style: style
   }, "DUE"), /*#__PURE__*/React.createElement("th", {
     style: style
-  }, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement(IssueRow, {
-    issue: issueList,
+  }, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, issueList.map(issueVar => /*#__PURE__*/React.createElement(IssueRow, {
+    issue: issueVar,
     style: style
-  }), /*#__PURE__*/React.createElement(IssueRow, {
-    issue: issueList,
-    style: style
-  }))));
+  })))));
 }
 function IssueAdd() {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueAdd"));

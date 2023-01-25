@@ -24,7 +24,7 @@ function IssueTable() {
     const style = {
         border: '1px solid'
     }
-    const issueList = {
+    const issueList = [{
         Id:"1",
         Owner: "Person=A",
         Status: "Assigned",
@@ -32,7 +32,16 @@ function IssueTable() {
         Effort: "4",
         Due:"2020-01-05",
         Title: "First Issue"
-    }
+    },
+    {
+        Id:"2",
+        Owner: "Person=B",
+        Status: "Assigned",
+        Created: "2020-01-01",
+        Effort: "4",
+        Due:"2020-01-05",
+        Title: "First Issue"
+    }]
     return (
         <div>
             <h3>Welcome to IssueTable</h3>
@@ -49,8 +58,9 @@ function IssueTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <IssueRow issue={issueList} style={style}></IssueRow>
-                    <IssueRow issue={issueList} style={style}></IssueRow>
+                    {issueList.map(issueVar=>
+                    <IssueRow issue={issueVar} style={style}></IssueRow>
+                    )}
                 </tbody>
             </table>
         </div>
