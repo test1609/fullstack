@@ -44,6 +44,14 @@ function IssueTable() {
     Due: "2020-01-05",
     Title: "First Issue"
   }];
+  const [allIssues, setAllIssues] = React.useState([]);
+  const [counter, setCounter] = React.useState(0);
+  console.log(counter);
+  // Try to simulate an API call
+  setTimeout(() => {
+    setCounter(counter + 1);
+    setAllIssues(issueList);
+  }, 2000);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueTable"), /*#__PURE__*/React.createElement("table", {
     style: style
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
@@ -60,7 +68,7 @@ function IssueTable() {
     style: style
   }, "DUE"), /*#__PURE__*/React.createElement("th", {
     style: style
-  }, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, issueList.map(issueVar => /*#__PURE__*/React.createElement(IssueRow, {
+  }, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, allIssues.map(issueVar => /*#__PURE__*/React.createElement(IssueRow, {
     issue: issueVar,
     style: style
   })))));

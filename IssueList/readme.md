@@ -6,4 +6,8 @@
  5. Add required functional or class components
  6. Change the js file name in index.html
  7. Compile and watch and run it again.
+ 8. We can iterate all the elements using below syntax, we do not need for loop to iterate elements, we can do so by .map function. issueVar will hold the current value from issueList for all the iteration and that will iterate automatically.
+ {issueList.map(issueVar=>
+                    <IssueRow issue={issueVar} style={style}></IssueRow>
+                    )}
  

@@ -42,6 +42,15 @@ function IssueTable() {
         Due:"2020-01-05",
         Title: "First Issue"
     }]
+
+    const [allIssues, setAllIssues] = React.useState([]);
+    const[counter, setCounter] = React.useState(0);
+    console.log(counter);
+    // Try to simulate an API call
+    setTimeout(()=>{
+        setCounter(counter + 1);
+        setAllIssues(issueList);
+    }, 2000)
     return (
         <div>
             <h3>Welcome to IssueTable</h3>
@@ -58,7 +67,7 @@ function IssueTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {issueList.map(issueVar=>
+                    {allIssues.map(issueVar=>
                     <IssueRow issue={issueVar} style={style}></IssueRow>
                     )}
                 </tbody>
