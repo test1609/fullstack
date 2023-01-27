@@ -65,10 +65,12 @@ function IssueTable() {
       // console.log('Hello', counter);
     }, 2000);
   }, []);
-  React.useEffect(() => {
-    AddSingleIssue();
-    console.log('Hello', counter);
-  }, [counter]);
+
+  // React.useEffect(() => {
+  //     AddSingleIssue();
+  //     console.log('Hello', counter);
+  // }, [counter])
+
   const AddSingleIssue = () => {
     let issues = allIssues.slice();
     issues.push(singleIssue);
@@ -96,7 +98,8 @@ function IssueTable() {
   })))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => {
-      setCounter(counter + 1);
+      // setCounter(counter + 1)
+      AddSingleIssue();
     }
   }, "Click Me"));
 }
