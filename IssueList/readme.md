@@ -10,4 +10,5 @@
  {issueList.map(issueVar=>
                     <IssueRow issue={issueVar} style={style}></IssueRow>
                     )}
- 
+ 9. State variable are used to make generally API call result show on the UI each time. Below code will assign 0 to counter in the initial phase and then we need to use setCounter(counter + 1); method to update value and this will render the component automatically.
+ const[counter, setCounter] = React.useState(0);

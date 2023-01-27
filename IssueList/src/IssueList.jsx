@@ -40,17 +40,43 @@ function IssueTable() {
         Created: "2020-01-01",
         Effort: "4",
         Due:"2020-01-05",
-        Title: "First Issue"
+        Title: "Second Issue"
     }]
+
+    const singleIssue = {
+        Id:"3",
+        Owner: "Person=c",
+        Status: "Assigned",
+        Created: "2020-01-01",
+        Effort: "4",
+        Due:"2020-01-05",
+        Title: "Third Issue"
+    }
 
     const [allIssues, setAllIssues] = React.useState([]);
     const[counter, setCounter] = React.useState(0);
     console.log(counter);
-    // Try to simulate an API call
-    setTimeout(()=>{
-        setCounter(counter + 1);
-        setAllIssues(issueList);
-    }, 2000)
+    React.useEffect(()=>{
+        // Try to simulate an API call
+        setTimeout(()=>{
+            // setCounter(counter + 1);
+            setAllIssues(issueList);
+            // AddSingleIssue();
+            // console.log('Hello', counter);
+        }, 2000)
+    }, [])
+
+    React.useEffect(()=>{
+            AddSingleIssue();
+            console.log('Hello', counter);
+    }, [counter])
+
+    const AddSingleIssue = ()=>{
+        let issues = allIssues.slice();
+        issues.push(singleIssue);
+        setAllIssues(issues);
+    }
+   
     return (
         <div>
             <h3>Welcome to IssueTable</h3>
@@ -72,6 +98,9 @@ function IssueTable() {
                     )}
                 </tbody>
             </table>
+            <button type="button" onClick={()=>{
+                setCounter(counter +1)
+            }}>Click Me</button>
         </div>
     )
 }

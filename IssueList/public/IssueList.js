@@ -42,16 +42,38 @@ function IssueTable() {
     Created: "2020-01-01",
     Effort: "4",
     Due: "2020-01-05",
-    Title: "First Issue"
+    Title: "Second Issue"
   }];
+  const singleIssue = {
+    Id: "3",
+    Owner: "Person=c",
+    Status: "Assigned",
+    Created: "2020-01-01",
+    Effort: "4",
+    Due: "2020-01-05",
+    Title: "Third Issue"
+  };
   const [allIssues, setAllIssues] = React.useState([]);
   const [counter, setCounter] = React.useState(0);
   console.log(counter);
-  // Try to simulate an API call
-  setTimeout(() => {
-    setCounter(counter + 1);
-    setAllIssues(issueList);
-  }, 2000);
+  React.useEffect(() => {
+    // Try to simulate an API call
+    setTimeout(() => {
+      // setCounter(counter + 1);
+      setAllIssues(issueList);
+      // AddSingleIssue();
+      // console.log('Hello', counter);
+    }, 2000);
+  }, []);
+  React.useEffect(() => {
+    AddSingleIssue();
+    console.log('Hello', counter);
+  }, [counter]);
+  const AddSingleIssue = () => {
+    let issues = allIssues.slice();
+    issues.push(singleIssue);
+    setAllIssues(issues);
+  };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueTable"), /*#__PURE__*/React.createElement("table", {
     style: style
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
@@ -71,7 +93,12 @@ function IssueTable() {
   }, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, allIssues.map(issueVar => /*#__PURE__*/React.createElement(IssueRow, {
     issue: issueVar,
     style: style
-  })))));
+  })))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => {
+      setCounter(counter + 1);
+    }
+  }, "Click Me"));
 }
 function IssueAdd() {
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueAdd"));
