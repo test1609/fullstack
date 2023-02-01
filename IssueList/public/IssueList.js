@@ -15,67 +15,70 @@ function IssueRow(props) {
     style: style
   }, issue.Status), /*#__PURE__*/React.createElement("td", {
     style: style
-  }, issue.Created), /*#__PURE__*/React.createElement("td", {
+  }, new Date(issue.Created).toUTCString()), /*#__PURE__*/React.createElement("td", {
     style: style
   }, issue.Effort), /*#__PURE__*/React.createElement("td", {
     style: style
-  }, issue.Due), /*#__PURE__*/React.createElement("td", {
+  }, new Date(issue.Due).toUTCString()), /*#__PURE__*/React.createElement("td", {
     style: style
   }, issue.Title));
 }
-function IssueTable() {
+function IssueTable({
+  allIssues
+}) {
   const style = {
     border: '1px solid'
   };
+  /*
   const issueList = [{
-    Id: "1",
-    Owner: "Person=A",
-    Status: "Assigned",
-    Created: "2020-01-01",
-    Effort: "4",
-    Due: "2020-01-05",
-    Title: "First Issue"
-  }, {
-    Id: "2",
-    Owner: "Person=B",
-    Status: "Assigned",
-    Created: "2020-01-01",
-    Effort: "4",
-    Due: "2020-01-05",
-    Title: "Second Issue"
-  }];
-  const singleIssue = {
-    Id: "3",
-    Owner: "Person=c",
-    Status: "Assigned",
-    Created: "2020-01-01",
-    Effort: "4",
-    Due: "2020-01-05",
-    Title: "Third Issue"
-  };
-  const [allIssues, setAllIssues] = React.useState([]);
+      Id: "1",
+      Owner: "Person=A",
+      Status: "Assigned",
+      Created: "2020-01-01",
+      Effort: "4",
+      Due: "2020-01-05",
+      Title: "First Issue"
+  },
+  {
+      Id: "2",
+      Owner: "Person=B",
+      Status: "Assigned",
+      Created: "2020-01-01",
+      Effort: "4",
+      Due: "2020-01-05",
+      Title: "Second Issue"
+  }]
+    const singleIssue = {
+      Id: "3",
+      Owner: "Person=c",
+      Status: "Assigned",
+      Created: "2020-01-01",
+      Effort: "4",
+      Due: "2020-01-05",
+      Title: "Third Issue"
+  }
+    const [allIssues, setAllIssues] = React.useState([]);
   const [counter, setCounter] = React.useState(0);
   console.log(counter);
   React.useEffect(() => {
-    // Try to simulate an API call
-    setTimeout(() => {
-      // setCounter(counter + 1);
-      setAllIssues(issueList);
-      // AddSingleIssue();
-      // console.log('Hello', counter);
-    }, 2000);
-  }, []);
-
-  // React.useEffect(() => {
+      // Try to simulate an API call
+      setTimeout(() => {
+          // setCounter(counter + 1);
+          setAllIssues(issueList);
+          // AddSingleIssue();
+          // console.log('Hello', counter);
+      }, 2000)
+  }, [])
+    // React.useEffect(() => {
   //     AddSingleIssue();
   //     console.log('Hello', counter);
   // }, [counter])
-
-  const AddSingleIssue = () => {
-    let issues = allIssues.slice();
-    issues.push(singleIssue);
-    setAllIssues(issues);
-  };
+    const AddSingleIssue = () => {
+      let issues = allIssues.slice();
+      issues.push(singleIssue);
+      setAllIssues(issues);
+  }
+  */
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueTable"), /*#__PURE__*/React.createElement("table", {
     style: style
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
@@ -103,11 +106,103 @@ function IssueTable() {
     }
   }, "Click Me"));
 }
-function IssueAdd() {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueAdd"));
+function IssueAdd({
+  AddSingleIssue
+}) {
+  const HandleSubmit = e => {
+    e.preventDefault();
+    let form = document.forms.addIssue;
+    console.log(form);
+    let singleIssue = {
+      Owner: form.owner.value,
+      Status: form.status.value,
+      Effort: form.effort.value,
+      Created: new Date(),
+      Due: new Date(),
+      Title: form.title.value
+    };
+    console.log(singleIssue);
+    AddSingleIssue(singleIssue);
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Welcome to IssueAdd"), /*#__PURE__*/React.createElement("form", {
+    name: "addIssue",
+    onSubmit: HandleSubmit
+  }, /*#__PURE__*/React.createElement("label", {
+    for: "owner"
+  }, "Owner:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "owner",
+    name: "owner"
+  }), /*#__PURE__*/React.createElement("label", {
+    for: "status"
+  }, "Status:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "status",
+    name: "status"
+  }), /*#__PURE__*/React.createElement("label", {
+    for: "effort"
+  }, "Effort:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "effort",
+    name: "effort"
+  }), /*#__PURE__*/React.createElement("label", {
+    for: "title"
+  }, "Title:"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    id: "title",
+    name: "title"
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit"
+  }, "Submit")));
 }
 const IssueList = () => {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(IssueFilter, null), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueTable, null), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueAdd, null));
+  const issueList = [{
+    Id: "1",
+    Owner: "Person=A",
+    Status: "Assigned",
+    Created: "2020-01-01",
+    Effort: "4",
+    Due: "2020-01-05",
+    Title: "First Issue"
+  }, {
+    Id: "2",
+    Owner: "Person=B",
+    Status: "Assigned",
+    Created: "2020-01-01",
+    Effort: "4",
+    Due: "2020-01-05",
+    Title: "Second Issue"
+  }];
+  const [allIssues, setAllIssues] = React.useState([]);
+  React.useEffect(() => {
+    // Try to simulate an API call
+    setTimeout(() => {
+      // setCounter(counter + 1);
+      setAllIssues(issueList);
+      // AddSingleIssue();
+      // console.log('Hello', counter);
+    }, 2000);
+  }, []);
+  const singleIssue = {
+    Id: "3",
+    Owner: "Person=c",
+    Status: "Assigned",
+    Created: "2020-01-01",
+    Effort: "4",
+    Due: "2020-01-05",
+    Title: "Third Issue"
+  };
+  const AddSingleIssue = singleIssue => {
+    singleIssue.Id = allIssues.length + 1;
+    let issues = allIssues.slice();
+    issues.push(singleIssue);
+    setAllIssues(issues);
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(IssueFilter, null), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueTable, {
+    allIssues: allIssues
+  }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueAdd, {
+    AddSingleIssue: AddSingleIssue
+  }));
 };
 const element = ReactDOM.createRoot(document.getElementById("root-1"));
 element.render( /*#__PURE__*/React.createElement(IssueList, null));

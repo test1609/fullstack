@@ -13,4 +13,7 @@
  9. State variable are used to make generally API call result show on the UI each time. Below code will assign 0 to counter in the initial phase and then we need to use setCounter(counter + 1); method to update value and this will render the component automatically.
  const[counter, setCounter] = React.useState(0);
 
- 10. 
+ 10. Variables from one component can not be passed to another component.
+ 11. Lifting up a state: share the state varibale between the components which belongs to the same parent.
+ 12. Methods are used to pass data from one to another component to provide encapsulation
+ 
