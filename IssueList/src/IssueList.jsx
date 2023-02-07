@@ -6,16 +6,18 @@ function IssueFilter() {
     )
 }
 function IssueRow(props) {
-    const { issue, style } = props;
+    const { issue, style, arr } = props;
+    console.log({arr});
+    console.log({arr})
     // props.id
     return (
         <tr>
             <td style={style}>{issue.Id}</td>
             <td style={style}>{issue.Owner}</td>
             <td style={style}>{issue.Status}</td>
-            <td style={style}>{new Date(issue.Created).toUTCString()}</td>
+            <td style={style}>{new Date(parseInt(issue.Created)).toLocaleDateString()}</td>
             <td style={style}>{issue.Effort}</td>
-            <td style={style}>{new Date(issue.Due).toUTCString()}</td>
+            <td style={style}>{new Date(parseInt(issue.Due)).toLocaleDateString()}</td>
             <td style={style}>{issue.Title}</td>
         </tr>
     )
@@ -24,6 +26,7 @@ function IssueTable({allIssues}) {
     const style = {
         border: '1px solid'
     }
+    const arr =[1,2,3]
     /*
     const issueList = [{
         Id: "1",
@@ -95,7 +98,7 @@ function IssueTable({allIssues}) {
                 </thead>
                 <tbody>
                     {allIssues.map(issueVar =>
-                        <IssueRow issue={issueVar} style={style}></IssueRow>
+                        <IssueRow issue={issueVar} style={style} arr={arr[0]}></IssueRow>
                     )}
                 </tbody>
             </table>
@@ -146,8 +149,23 @@ function IssueAdd({AddSingleIssue}) {
     )
 }
 
+
+
 const IssueList = () => {
-    const issueList = [{
+    let query = `
+        query  {
+            issueList {
+                Id
+                Status
+                Owner
+                Effort
+                Created
+                Due
+                Title
+            }
+      }
+    `;
+   /* const issueList = [{
         Id: "1",
         Owner: "Person=A",
         Status: "Assigned",
@@ -165,10 +183,22 @@ const IssueList = () => {
         Due: "2020-01-05",
         Title: "Second Issue"
     }]
-  
+  */
     const [allIssues, setAllIssues] = React.useState([]);
    
-    React.useEffect(() => {
+    React.useEffect(function(){
+        fetch('/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ query })
+        }).then(async (response)=> {
+            let tempIssues = await response.json();
+            let tempList = tempIssues.data.issueList;
+            console.log(tempIssues);
+            setAllIssues(tempList)
+        })
+    },[]);
+    /*React.useEffect(() => {
         // Try to simulate an API call
         setTimeout(() => {
             // setCounter(counter + 1);
@@ -177,7 +207,7 @@ const IssueList = () => {
             // console.log('Hello', counter);
         }, 2000)
     }, [])
-
+*/
     const singleIssue = {
         Id: "3",
         Owner: "Person=c",
@@ -206,5 +236,5 @@ const IssueList = () => {
     )
 }
 
-const element = ReactDOM.createRoot(document.getElementById("root-1"));
-element.render(<IssueList></IssueList>)
+const rootElement = ReactDOM.createRoot(document.getElementById("root-1"));
+rootElement.render(<IssueList></IssueList>)

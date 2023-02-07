@@ -4,8 +4,15 @@ function IssueFilter() {
 function IssueRow(props) {
   const {
     issue,
-    style
+    style,
+    arr
   } = props;
+  console.log({
+    arr
+  });
+  console.log({
+    arr
+  });
   // props.id
   return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
     style: style
@@ -15,11 +22,11 @@ function IssueRow(props) {
     style: style
   }, issue.Status), /*#__PURE__*/React.createElement("td", {
     style: style
-  }, new Date(issue.Created).toUTCString()), /*#__PURE__*/React.createElement("td", {
+  }, new Date(parseInt(issue.Created)).toLocaleDateString()), /*#__PURE__*/React.createElement("td", {
     style: style
   }, issue.Effort), /*#__PURE__*/React.createElement("td", {
     style: style
-  }, new Date(issue.Due).toUTCString()), /*#__PURE__*/React.createElement("td", {
+  }, new Date(parseInt(issue.Due)).toLocaleDateString()), /*#__PURE__*/React.createElement("td", {
     style: style
   }, issue.Title));
 }
@@ -29,6 +36,7 @@ function IssueTable({
   const style = {
     border: '1px solid'
   };
+  const arr = [1, 2, 3];
   /*
   const issueList = [{
       Id: "1",
@@ -97,7 +105,8 @@ function IssueTable({
     style: style
   }, "TITLE"))), /*#__PURE__*/React.createElement("tbody", null, allIssues.map(issueVar => /*#__PURE__*/React.createElement(IssueRow, {
     issue: issueVar,
-    style: style
+    style: style,
+    arr: arr[0]
   })))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: () => {
@@ -156,33 +165,65 @@ function IssueAdd({
   }, "Submit")));
 }
 const IssueList = () => {
-  const issueList = [{
-    Id: "1",
-    Owner: "Person=A",
-    Status: "Assigned",
-    Created: "2020-01-01",
-    Effort: "4",
-    Due: "2020-01-05",
-    Title: "First Issue"
-  }, {
-    Id: "2",
-    Owner: "Person=B",
-    Status: "Assigned",
-    Created: "2020-01-01",
-    Effort: "4",
-    Due: "2020-01-05",
-    Title: "Second Issue"
-  }];
+  let query = `
+        query  {
+            issueList {
+                Id
+                Status
+                Owner
+                Effort
+                Created
+                Due
+                Title
+            }
+      }
+    `;
+  /* const issueList = [{
+       Id: "1",
+       Owner: "Person=A",
+       Status: "Assigned",
+       Created: "2020-01-01",
+       Effort: "4",
+       Due: "2020-01-05",
+       Title: "First Issue"
+   },
+   {
+       Id: "2",
+       Owner: "Person=B",
+       Status: "Assigned",
+       Created: "2020-01-01",
+       Effort: "4",
+       Due: "2020-01-05",
+       Title: "Second Issue"
+   }]
+  */
   const [allIssues, setAllIssues] = React.useState([]);
-  React.useEffect(() => {
-    // Try to simulate an API call
-    setTimeout(() => {
-      // setCounter(counter + 1);
-      setAllIssues(issueList);
-      // AddSingleIssue();
-      // console.log('Hello', counter);
-    }, 2000);
+  React.useEffect(function () {
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query
+      })
+    }).then(async response => {
+      let tempIssues = await response.json();
+      let tempList = tempIssues.data.issueList;
+      console.log(tempIssues);
+      setAllIssues(tempList);
+    });
   }, []);
+  /*React.useEffect(() => {
+      // Try to simulate an API call
+      setTimeout(() => {
+          // setCounter(counter + 1);
+          setAllIssues(issueList);
+          // AddSingleIssue();
+          // console.log('Hello', counter);
+      }, 2000)
+  }, [])
+  */
   const singleIssue = {
     Id: "3",
     Owner: "Person=c",
