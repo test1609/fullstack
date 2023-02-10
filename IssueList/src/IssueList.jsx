@@ -7,8 +7,8 @@ function IssueFilter() {
 }
 function IssueRow(props) {
     const { issue, style, arr } = props;
-    console.log({arr});
-    console.log({arr})
+    console.log({ arr });
+    console.log({ arr })
     // props.id
     return (
         <tr>
@@ -22,11 +22,11 @@ function IssueRow(props) {
         </tr>
     )
 }
-function IssueTable({allIssues}) {
+function IssueTable({ allIssues }) {
     const style = {
         border: '1px solid'
     }
-    const arr =[1,2,3]
+    const arr = [1, 2, 3]
     /*
     const issueList = [{
         Id: "1",
@@ -109,8 +109,8 @@ function IssueTable({allIssues}) {
         </div>
     )
 }
-function IssueAdd({AddSingleIssue}) {
-    const HandleSubmit = (e)=>{
+function IssueAdd({ AddSingleIssue }) {
+    const HandleSubmit = (e) => {
         e.preventDefault();
         let form = document.forms.addIssue;
         console.log(form);
@@ -131,18 +131,18 @@ function IssueAdd({AddSingleIssue}) {
                 // setCounter(counter + 1)
                 AddSingleIssue.AddSingleIssue();
             }}>Click Me</button> */}
-            
+
             <h3>Welcome to IssueAdd</h3>
-            <form  name = "addIssue" onSubmit={HandleSubmit
+            <form name="addIssue" onSubmit={HandleSubmit
             }>
                 <label for="owner">Owner:</label>
                 <input type="text" id="owner" name="owner" />
                 <label for="status">Status:</label>
-                <input type="text" id="status" name="status"/>
+                <input type="text" id="status" name="status" />
                 <label for="effort">Effort:</label>
-                <input type="text" id="effort" name="effort"/>
+                <input type="text" id="effort" name="effort" />
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title"/>
+                <input type="text" id="title" name="title" />
                 <button type="submit">Submit</button>
             </form>
         </div>
@@ -165,39 +165,39 @@ const IssueList = () => {
             }
       }
     `;
-   /* const issueList = [{
-        Id: "1",
-        Owner: "Person=A",
-        Status: "Assigned",
-        Created: "2020-01-01",
-        Effort: "4",
-        Due: "2020-01-05",
-        Title: "First Issue"
-    },
-    {
-        Id: "2",
-        Owner: "Person=B",
-        Status: "Assigned",
-        Created: "2020-01-01",
-        Effort: "4",
-        Due: "2020-01-05",
-        Title: "Second Issue"
-    }]
-  */
+    /* const issueList = [{
+         Id: "1",
+         Owner: "Person=A",
+         Status: "Assigned",
+         Created: "2020-01-01",
+         Effort: "4",
+         Due: "2020-01-05",
+         Title: "First Issue"
+     },
+     {
+         Id: "2",
+         Owner: "Person=B",
+         Status: "Assigned",
+         Created: "2020-01-01",
+         Effort: "4",
+         Due: "2020-01-05",
+         Title: "Second Issue"
+     }]
+   */
     const [allIssues, setAllIssues] = React.useState([]);
-   
-    React.useEffect(function(){
+
+    React.useEffect(function () {
         fetch('/graphql', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query })
-        }).then(async (response)=> {
+        }).then(async (response) => {
             let tempIssues = await response.json();
             let tempList = tempIssues.data.issueList;
             console.log(tempIssues);
             setAllIssues(tempList)
         })
-    },[]);
+    }, []);
     /*React.useEffect(() => {
         // Try to simulate an API call
         setTimeout(() => {
@@ -219,7 +219,20 @@ const IssueList = () => {
     }
 
     const AddSingleIssue = (singleIssue) => {
-        singleIssue.Id = allIssues.length+1;
+        let query = `
+        mutation SetGreetMessage($message: String!) {
+            setGreetMessage(message: $message)
+          }
+        `;
+        fetch('/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query, variables: { message: "This is a cient message" } })
+        }).then(async (response) => {
+            let temp = await response.json();
+            console.log(temp);
+        });
+        singleIssue.Id = allIssues.length + 1;
         let issues = allIssues.slice();
         issues.push(singleIssue);
         setAllIssues(issues);

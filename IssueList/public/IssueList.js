@@ -234,6 +234,26 @@ const IssueList = () => {
     Title: "Third Issue"
   };
   const AddSingleIssue = singleIssue => {
+    let query = `
+        mutation SetGreetMessage($message: String!) {
+            setGreetMessage(message: $message)
+          }
+        `;
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query,
+        variables: {
+          message: "This is a cient message"
+        }
+      })
+    }).then(async response => {
+      let temp = await response.json();
+      console.log(temp);
+    });
     singleIssue.Id = allIssues.length + 1;
     let issues = allIssues.slice();
     issues.push(singleIssue);
@@ -245,5 +265,5 @@ const IssueList = () => {
     AddSingleIssue: AddSingleIssue
   }));
 };
-const element = ReactDOM.createRoot(document.getElementById("root-1"));
-element.render( /*#__PURE__*/React.createElement(IssueList, null));
+const rootElement = ReactDOM.createRoot(document.getElementById("root-1"));
+rootElement.render( /*#__PURE__*/React.createElement(IssueList, null));
