@@ -125,7 +125,7 @@ function IssueAdd({
     let singleIssue = {
       Owner: form.owner.value,
       Status: form.status.value,
-      Effort: form.effort.value,
+      Effort: parseInt(form.effort.value),
       Created: new Date(),
       Due: new Date(),
       Title: form.title.value
@@ -151,7 +151,7 @@ function IssueAdd({
   }), /*#__PURE__*/React.createElement("label", {
     for: "effort"
   }, "Effort:"), /*#__PURE__*/React.createElement("input", {
-    type: "text",
+    type: "number",
     id: "effort",
     name: "effort"
   }), /*#__PURE__*/React.createElement("label", {
@@ -197,8 +197,9 @@ const IssueList = () => {
        Title: "Second Issue"
    }]
   */
+
   const [allIssues, setAllIssues] = React.useState([]);
-  React.useEffect(function () {
+  function FetchData() {
     fetch('/graphql', {
       method: 'POST',
       headers: {
@@ -213,6 +214,9 @@ const IssueList = () => {
       console.log(tempIssues);
       setAllIssues(tempList);
     });
+  }
+  React.useEffect(function () {
+    FetchData();
   }, []);
   /*React.useEffect(() => {
       // Try to simulate an API call
@@ -234,11 +238,24 @@ const IssueList = () => {
     Title: "Third Issue"
   };
   const AddSingleIssue = singleIssue => {
-    let query = `
-        mutation SetGreetMessage($message: String!) {
-            setGreetMessage(message: $message)
-          }
-        `;
+    // let query = `
+    // mutation SetGreetMessage($message: String!) {
+    //     setGreetMessage(message: $message)
+    //   }
+    // `;
+
+    // fetch('/graphql', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ query, variables: { message: "This is a cient message" } })
+    // }).then(async (response) => {
+    //     let temp = await response.json();
+    //     console.log(temp);
+    // });
+
+    let query = `mutation AddSingleIssue($Status: String!, $Owner: String!, $Title: String!, $Effort: Int) {
+            addSingleIssue(Status: $Status, Owner: $Owner, Title: $Title, Effort: $Effort)
+          }`;
     fetch('/graphql', {
       method: 'POST',
       headers: {
@@ -247,18 +264,24 @@ const IssueList = () => {
       body: JSON.stringify({
         query,
         variables: {
-          message: "This is a cient message"
+          Status: singleIssue.Status,
+          Owner: singleIssue.Owner,
+          Title: singleIssue.Title,
+          Effort: singleIssue.Effort
         }
       })
     }).then(async response => {
+      FetchData();
       let temp = await response.json();
       console.log(temp);
     });
-    singleIssue.Id = allIssues.length + 1;
-    let issues = allIssues.slice();
-    issues.push(singleIssue);
-    setAllIssues(issues);
+
+    // singleIssue.Id = allIssues.length + 1;
+    // let issues = allIssues.slice();
+    // issues.push(singleIssue);
+    // setAllIssues(issues);
   };
+
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(IssueFilter, null), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueTable, {
     allIssues: allIssues
   }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueAdd, {
